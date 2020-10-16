@@ -1,0 +1,26 @@
+[
+  {
+    "id": 2,
+    "type": "warning",
+    "status": "水量供需異常",
+    "color": "yellow",
+    "position": "辦公大樓一樓",
+    "beforeNum": 170,
+    "afterNum": 3,
+    "quantityNum": 25.7,
+    "pointer1": 0,
+    "pointer2": 2
+  },
+  {
+    "id": "w7",
+    "type": "warning",
+    "status": "設備漏水",
+    "color": "yellow",
+    "position": "辦公大樓一樓",
+    "beforeNum": 198,
+    "afterNum": 3,
+    "quantityNum": 39.3,
+    "pointer1": 2,
+    "pointer2": 2
+  }
+]

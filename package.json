@@ -1,0 +1,24 @@
+{
+  "name": "vue3-playground",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "backend": "node ./backend/index.js"
+  },
+  "dependencies": {
+    "@vueuse/core": "file:/home/johnsonchen/Desktop/vueuse/dist/core",
+    "axios": "^0.20.0",
+    "tailwindcss": "^1.8.10",
+    "vue": "^3.0.0",
+    "vue-final-modal": "^1.1.1",
+    "vue-router": "^4.0.0-beta.12"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-rc.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "vite": "^1.0.0-rc.1",
+    "ws": "^7.3.1"
+  }
+}
