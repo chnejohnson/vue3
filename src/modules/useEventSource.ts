@@ -8,7 +8,7 @@ import { tryOnMounted, tryOnUnmounted } from "@vueuse/core";
 export function useEventSource(url: string, events: Array<string> = []) {
   const event: Ref<string | null> = ref(null);
   const data: Ref<string | null> = ref(null);
-  const status = ref("CONNECTING") as Ref<"OPEN" | "CONNECTING" | "CLOSED">;
+  const status = ref("DISCONNECT") as Ref<"DISCONNECT" | "OPEN" | "CONNECTING" | "CLOSED">;
   const eventSource = ref(null) as Ref<EventSource | null>;
   const error = ref(null) as Ref<Event | null>;
 
@@ -20,10 +20,12 @@ export function useEventSource(url: string, events: Array<string> = []) {
     }
   };
 
-  tryOnMounted(() => {
+  const connect = () => {
     const es = new EventSource(url);
 
     eventSource.value = es;
+
+    status.value = "CONNECTING";
 
     es.onopen = () => {
       status.value = "OPEN";
@@ -47,7 +49,7 @@ export function useEventSource(url: string, events: Array<string> = []) {
         data.value = e.data || null;
       });
     }
-  });
+  };
 
   tryOnUnmounted(() => {
     close();
@@ -59,7 +61,8 @@ export function useEventSource(url: string, events: Array<string> = []) {
     data,
     status,
     error,
-    close
+    close,
+    connect
   };
 }
 

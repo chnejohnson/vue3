@@ -9,7 +9,7 @@
 <script lang="ts">
 import { computed, ref, watch, watchEffect } from "vue";
 import { useWebSocket } from "@vueuse/core";
-import { useEventSource } from "@vueuse/core";
+import { useEventSource } from "../modules/useEventSource";
 import { useGlobalState } from "../modules/useGlobalState";
 
 export default {
@@ -22,19 +22,13 @@ export default {
     //   amount.value += Number(e.data);
     // };
 
-    const connect = () => {
-      const { data, close, status, error } = useEventSource(
-        "http://localhost:2222/cash"
-      );
+    const { data, close, status, error, connect, eventSource } = useEventSource(
+      "http://localhost:2222/cash"
+    );
 
-      watch(data, (data, _) => {
-        amount.value = Number(data);
-      });
-
-      watch(error, (err, _) => {
-        if (error.value) close();
-      });
-    };
+    watch(data, (data, _) => {
+      amount.value = Number(data);
+    });
 
     // 使用 globalState
     const state = useGlobalState();
