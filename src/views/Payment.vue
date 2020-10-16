@@ -44,8 +44,8 @@ export default {
       amount: computed(() => amount.value),
       close,
       status,
-      state
+      state,
     };
-  }
+  },
 };
 </script>
