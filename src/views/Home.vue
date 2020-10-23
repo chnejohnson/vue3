@@ -11,16 +11,14 @@
 
   <p>{{ state }}</p>
 
-  <h3>Cards Position</h3>
-  <ul>
-    <li v-for="card in cards" :key="card.id">{{ card.position }}</li>
-  </ul>
+  <div>
+    <BaseKeyboard />
+  </div>
 </template>
 
 <script>
 import HelloWorld from "../components/HelloWorld.vue";
 import { computed, ref } from "vue";
-import useCards from "../modules/useCards";
 import { useState } from "../store.js";
 
 export default {
@@ -28,9 +26,7 @@ export default {
     HelloWorld,
   },
   setup() {
-    const { cards } = useCards("warning");
-
-    return { cards, ...useState() };
+    return { ...useState() };
   },
 };
 </script>

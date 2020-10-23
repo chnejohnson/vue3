@@ -9,6 +9,7 @@
   "dependencies": {
     "@vueuse/core": "file:/home/johnsonchen/Desktop/vueuse/dist/core",
     "axios": "^0.20.0",
+    "simple-keyboard": "^2.31.1",
     "tailwindcss": "^1.8.10",
     "vue": "^3.0.0",
     "vue-final-modal": "^1.1.1",
