@@ -47,7 +47,7 @@ export default {
     }
 
     return {
-      input: computed(() => input.value),
+      input,
     };
   },
 };

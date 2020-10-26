@@ -38,50 +38,92 @@ app.get("/car/:license", (req, res) => {
 // websocket
 const wss = new ws.Server({ noServer: true });
 
-wss.on("connection", socket => {
-  socket.on("message", message => {
-    console.log(message);
+// wss.on("connection", socket => {
+//   socket.on("message", message => {
+//     console.log(message);
 
-    wss.clients.forEach(function each(client) {
-      if (client.readyState === ws.OPEN) {
-        client.send(message);
-      }
-    });
-  });
+//     wss.clients.forEach(function each(client) {
+//       if (client.readyState === ws.OPEN) {
+//         client.send(message);
+//       }
+//     });
+//   });
+// });
+
+wss.on("open", () => {
+  console.log("open");
+
+  wss.send("server got the first connection.");
 });
 
-wss.on("message", data => {
-  console.log(data);
-});
+let interval;
 
-// SSE
-app.get("/cash", function (req, res) {
-  res.writeHead(200, {
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    Connection: "keep-alive"
+let paymentInterval;
+wss.on("connection", ws => {
+  console.log("on connection");
+  ws.on("message", msg => {
+    console.log("client sent: ", msg);
+
+    const data = JSON.parse(msg);
+
+    let count = 0;
+    if (data.type === "payment" && data.msg === "start") {
+      console.log("start paying");
+
+      paymentInterval = setInterval(() => {
+        count++;
+        ws.send(JSON.stringify({ type: "payment", amount: count }));
+        console.log(count);
+      }, 1000);
+    }
+
+    if (data.type === "payment" && data.msg === "stop") {
+      clearInterval(paymentInterval);
+      console.log("payment stopped");
+    }
   });
-  res.connection.setTimeout(0);
 
-  console.log("start casting coins");
+  interval = setInterval(() => {
+    const data = {
+      type: "heartbeat"
+    };
+    ws.send(JSON.stringify(data));
+  }, 5000);
 
-  // wss.on("connection", socket => {
-  //   socket.on("message", message => {
-  //     res.write("data: " + message + "\n\n");
-  //   });
-  // });
-  let counter = 0;
-  const interval = setInterval(() => {
-    counter++;
-    console.log(counter);
-    res.write("data: " + counter + "\n\n");
-  }, 1000);
-
-  req.on("close", () => {
+  ws.on("close", () => {
     console.log("client close the connection");
     clearInterval(interval);
   });
 });
+
+// SSE
+// app.get("/cash", function (req, res) {
+//   res.writeHead(200, {
+//     "Content-Type": "text/event-stream",
+//     "Cache-Control": "no-cache",
+//     Connection: "keep-alive"
+//   });
+//   res.connection.setTimeout(0);
+
+//   console.log("start casting coins");
+
+//   // wss.on("connection", socket => {
+//   //   socket.on("message", message => {
+//   //     res.write("data: " + message + "\n\n");
+//   //   });
+//   // });
+//   let counter = 0;
+//   const interval = setInterval(() => {
+//     counter++;
+//     console.log(counter);
+//     res.write("data: " + counter + "\n\n");
+//   }, 1000);
+
+//   req.on("close", () => {
+//     console.log("client close the connection");
+//     clearInterval(interval);
+//   });
+// });
 
 // function countdown(res, count) {
 //   res.write("data: " + count + "\n\n");

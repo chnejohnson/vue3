@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="../assets/logo.png" />
+  <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
   <HelloWorld msg="Hello Vue 3.0 + Vite" />
   <BaseModal />
 
@@ -14,6 +14,10 @@
   <div>
     <BaseKeyboard />
   </div>
+
+  <router-link to="/payment" v-slot="{ navigate }">
+    <BaseButton @click="navigate">現金支付</BaseButton>
+  </router-link>
 </template>
 
 <script>

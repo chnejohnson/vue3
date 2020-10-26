@@ -11,6 +11,7 @@ import BaseModal from "./components/base/BaseModal.vue";
 import BaseButton from "./components/base/BaseButton.vue";
 import BaseInput from "./components/base/BaseInput.vue";
 import BaseKeyboard from "./components/base/BaseKeyboard.vue";
+// import { ws, createWebsocket } from "./ws";
 
 app.use(router);
 
@@ -19,4 +20,7 @@ app.component("BaseButton", BaseButton);
 app.component("BaseInput", BaseInput);
 app.component("BaseKeyboard", BaseKeyboard);
 
-app.provide(state, createStore()).mount("#app");
+app.provide(state, createStore());
+// app.provide(ws, createWebsocket());
+
+app.mount("#app");
