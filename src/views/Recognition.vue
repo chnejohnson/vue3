@@ -32,7 +32,13 @@ export default {
     const name = ref<string>("");
 
     onMounted(async () => {
-      await getCar(license.value);
+      // 為什麼 try...catch...在這裡沒用？
+      // 為什麼 onerror 沒有在這裡發動？
+      try {
+        await getCar(license.value);
+      } catch (e) {
+        throw new Error(e);
+      }
     });
 
     const { state, changeName } = useState();

@@ -9,6 +9,11 @@ import { ref } from "vue";
 export default {
   name: "App",
   setup() {
+    window.addEventListener("unhandledrejection", function (event) {
+      console.log("listening on unhandledrejection", event);
+      throw new Error(event); // 這不會被 vue.config.errorHandler 抓到，因為這是掛在 window 底下的
+    });
+
     const ws = ref(null);
     ws.value = new WebSocket("ws://localhost:2222");
 
@@ -28,7 +33,7 @@ export default {
     };
 
     ws.value.onclose = () => {
-      console.log("Error: websocket is disconnected");
+      throw new Error("Error: websocket is disconnected");
     };
   },
 };

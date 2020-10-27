@@ -18,11 +18,21 @@
   <router-link to="/payment" v-slot="{ navigate }">
     <BaseButton @click="navigate">現金支付</BaseButton>
   </router-link>
+
+  <div class="flex flex-wrap border-dashed border-4 mx-48">
+    <div
+      class="border-dashed border-2 border-black h-40 w-1/4 flex-grow justify-center flex"
+      v-for="(img, i) in images"
+      :key="i"
+    >
+      <img :src="img" class="w-full img" alt="" />
+    </div>
+  </div>
 </template>
 
 <script>
 import HelloWorld from "../components/HelloWorld.vue";
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useState } from "../store.js";
 
 export default {
@@ -30,7 +40,30 @@ export default {
     HelloWorld,
   },
   setup() {
-    return { ...useState() };
+    const images = ref([
+      "images/ecc.png",
+      "images/icash.png",
+      "images/ecc.png",
+      "images/icash.png",
+      "images/ecc.png",
+      "images/icash.png",
+      "images/ecc.png",
+      "images/icash.png",
+      "images/icash.png",
+      "images/icash.png",
+      "images/icash.png",
+    ]);
+    return { ...useState(), images };
   },
 };
 </script>
+
+<style scoped>
+.img {
+  /* object-fit: cover; */
+  /* object-position: center; */
+  /* background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+}
+</style>

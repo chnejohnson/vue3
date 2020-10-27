@@ -23,4 +23,8 @@ app.component("BaseKeyboard", BaseKeyboard);
 app.provide(state, createStore());
 // app.provide(ws, createWebsocket());
 
+app.config.errorHandler = (err, vm, info) => {
+  console.log("This is Vue Error Handler!", err, vm, info);
+};
+
 app.mount("#app");
